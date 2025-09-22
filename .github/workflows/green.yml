@@ -26,15 +26,15 @@ jobs:
       with:
         credentials_json: ${{ secrets.GKE_SA_KEY }}
 
-    - name: Configure gcloud
+    - name: Docker login to Artifact Registry
       run: |
-        gcloud config set project $PROJECT_ID
-        gcloud config set compute/region $REGION
+        gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://$REGION-docker.pkg.dev
 
     - name: Get GKE credentials
-      run: |
-        export USE_GKE_GCLOUD_AUTH_PLUGIN=True
-        gcloud container clusters get-credentials $CLUSTER --region $REGION
+      uses: google-github-actions/get-gke-credentials@v0
+      with:
+        cluster_name: ${{ env.CLUSTER }}
+        location: ${{ env.REGION }}
 
     - name: Build Docker image
       run: |
@@ -43,6 +43,5 @@ jobs:
 
     - name: Deploy to GKE
       run: |
-        export USE_GKE_GCLOUD_AUTH_PLUGIN=True
         kubectl apply -f $DEPLOYMENT_FILE
-        kubectl set image deployment/app-green myapp=$REGION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE_NAME:${{ github.sha }}
+        kubectl get pods
