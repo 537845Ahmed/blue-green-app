@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: myapp
-        image: europe-west4-docker.pkg.dev/k8-cluster-470912/blue-green-app/blue:latest
+        image: europe-west4-docker.pkg.dev/k8-cluster-470912/blue-green-app/blue@sha256:0df91f0c0e45b504166d3724d9410c0496504aac9195ad1e25ca8a933f97b463
         ports:
         - containerPort: 8080
       imagePullSecrets:
