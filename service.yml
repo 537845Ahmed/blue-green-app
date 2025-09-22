@@ -6,7 +6,7 @@ spec:
   type: LoadBalancer
   selector:
     app: myapp
-    version: blue   # 🔄 verander naar "green" om over te schakelen
+    version: green   # 🔄 verander naar "green" om over te schakelen
   ports:
     - protocol: TCP
       port: 80
