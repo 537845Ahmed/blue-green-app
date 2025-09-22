@@ -22,3 +22,5 @@ spec:
         image: europe-west4-docker.pkg.dev/k8-cluster-470912/blue-green-app/blue:latest
         ports:
         - containerPort: 8080
+      imagePullSecrets:
+      - name: gar-secret  
