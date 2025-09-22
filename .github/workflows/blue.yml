@@ -31,11 +31,6 @@ jobs:
         gcloud config set project $PROJECT_ID
         gcloud config set compute/region $REGION
 
-    - name: Install gke-gcloud-auth-plugin
-      run: |
-        sudo apt-get update && sudo apt-get install -y google-cloud-cli-gke-gcloud-auth-plugin
-        gcloud components update
-
     - name: Get GKE credentials
       run: |
         export USE_GKE_GCLOUD_AUTH_PLUGIN=True
@@ -50,4 +45,4 @@ jobs:
       run: |
         export USE_GKE_GCLOUD_AUTH_PLUGIN=True
         kubectl apply -f $DEPLOYMENT_FILE
-        kubectl set image deployment/blue-deployment blue=$REGION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE_NAME:${{ github.sha }}
+        kubectl set image deployment/app-blue myapp=$REGION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE_NAME:${{ github.sha }}
